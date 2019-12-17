@@ -19,6 +19,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Voyager::routes();
     Route::get('parser', 'Parser');
+    
 });
 
 Route::match(['get', 'post'], '/unrecognized', 'UnrecognizedController');
