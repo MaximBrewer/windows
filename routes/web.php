@@ -11,6 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::get('/ci', 'Puton');
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Voyager::routes();
+    Route::get('parser', 'Parser');
 });
+
+Route::match(['get', 'post'], '/unrecognized', 'UnrecognizedController');
+
+Route::match(['get', 'post'], '/windows', 'WindowsController@index');
+
+Route::get('/home', 'HomeController@index')->name('home');
