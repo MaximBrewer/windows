@@ -27,3 +27,7 @@ Route::match(['get', 'post'], '/unrecognized', 'UnrecognizedController');
 Route::match(['get', 'post'], '/windows', 'WindowsController@index');
 
 Route::get('/', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Unknown;
+use App\Unrecognized;
 use App\CarProducer;
 use App\CarModel;
 use Illuminate\Http\Request;
@@ -24,25 +24,25 @@ class UnrecognizedController extends Controller
                         foreach ($model_titles as $model_title) {
                             if (!empty($model_title)) {
                                 if ($carProducer = CarProducer::find($car_producer_id)) {
-                                    $carModel = CarModel::where('car_producer', $carProducer->id)
+                                    $carModel = CarModel::where('car_producer_id', $carProducer->id)
                                         ->where('title', $model_title)
                                         ->first();
                                     if (!$carModel) {
                                         CarModel::create([
                                             'title' => $model_title,
-                                            'car_producer' => $carProducer->id
+                                            'car_producer_id' => $carProducer->id
                                         ]);
                                     }
                                 }
-                                $Unknown = Unknown::find($unrecognized_id);
-                                $Unknown->delete();
+                                $Unrecognized = Unrecognized::find($unrecognized_id);
+                                $Unrecognized->delete();
                             }
                         }
                     }
                 }
             }
         }
-        $unrecognizeds = Unknown::all();
+        $unrecognizeds = Unrecognized::all();
         return view('unrecognized', ['unrecognizeds' => $unrecognizeds, 'i' => 0]);
     }
 }

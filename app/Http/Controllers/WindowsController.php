@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\WindowModel;
 
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
 class WindowsController extends Controller
 {
     /**
@@ -14,7 +17,10 @@ class WindowsController extends Controller
      */
     public function index()
     {
-        return WindowModel::all();
+
+        $windows = WindowModel::paginate(10);
+
+        return view('windows.index', ['windows' => $windows, "i" => 0]);
     }
 
     /**

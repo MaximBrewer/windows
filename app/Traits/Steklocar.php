@@ -133,7 +133,7 @@ trait Steklocar
                 if (!$carProducer) $carProducer = \App\CarProducer::create(['title' => $f[0]]);
 
                 $carModels = DB::select(
-                    "SELECT id, title, car_producer FROM car_models where car_producer = ? AND LOCATE(`title`, ?) > 0;",
+                    "SELECT id, title, car_producer_id FROM car_models where car_producer_id = ? AND LOCATE(`title`, ?) > 0;",
                     [
                         $carProducer->id,
                         $f[1]
@@ -142,7 +142,6 @@ trait Steklocar
 
                 $carModel = null;
 
-
                 if (is_array($carModels) && count($carModels)) {
                     $carModel = $carModels[0];
                     foreach ($carModels as $carModele) {
@@ -150,15 +149,14 @@ trait Steklocar
                     }
                 }
 
-
                 if (!$carModel) {
-                    $unknownObj = new \App\Unknown();
-                    $unknown = $unknownObj
+                    $unrecognizedObj = new \App\Unrecognized();
+                    $unrecognized = $unrecognizedObj
                         ->where('car_model', $f[1])
                         ->where('car_producer_id', $carProducer->id)
                         ->where('misstake', 'model')
                         ->first();
-                    if (!$unknown) $unknown = $unknownObj->create([
+                    if (!$unrecognized) $unrecognized = $unrecognizedObj->create([
                         'car_model' => $f[1],
                         'car_producer_id' => $carProducer->id,
                         'misstake' => 'model'
@@ -169,12 +167,13 @@ trait Steklocar
 
                     $carBodyObj = new \App\CarBody();
                     $carBody = $carBodyObj
-                        ->where('car_model', $carModel->id)
+                        ->where('car_model_id', $carModel->id)
                         ->where('title', $car_body)
                         ->first();
+
                     if (!$carBody) $carBody = $carBodyObj->create([
                         'title' => $car_body,
-                        'car_model' => $carModel->id,
+                        'car_model_id' => $carModel->id,
                     ]);
 
                     $windowType = \App\WindowType::where('title', $f[2])->first();
@@ -185,7 +184,7 @@ trait Steklocar
                 $f = [$f[0], $ft[0], $ft[1]];
 
                 $carModels = DB::select(
-                    "SELECT id, title, car_producer FROM car_models where car_producer = ? AND LOCATE(`title`, ?) > 0;",
+                    "SELECT id, title, car_producer_id FROM car_models where car_producer_id = ? AND LOCATE(`title`, ?) > 0;",
                     [
                         $carProducer->id,
                         $f[1]
@@ -202,13 +201,13 @@ trait Steklocar
                 }
 
                 if (!$carModel) {
-                    $unknownObj = new \App\Unknown();
-                    $unknown = $unknownObj
+                    $unrecognizedObj = new \App\Unrecognized();
+                    $unrecognized = $unrecognizedObj
                         ->where('car_model', $f[1])
                         ->where('car_producer_id', $carProducer->id)
                         ->where('misstake', 'model')
                         ->first();
-                    if (!$unknown) $unknown = $unknownObj->create([
+                    if (!$unrecognized) $unrecognized = $unrecognizedObj->create([
                         'car_model' => $f[1],
                         'car_producer_id' => $carProducer->id,
                         'misstake' => 'model'
@@ -216,15 +215,14 @@ trait Steklocar
                 } else {
 
                     $car_body = trim(str_ireplace($carModel->title, "", $f[1]));
-
                     $carBodyObj = new \App\CarBody();
                     $carBody = $carBodyObj
-                        ->where('car_model', $carModel->id)
+                        ->where('car_model_id', $carModel->id)
                         ->where('title', $car_body)
                         ->first();
                     if (!$carBody) $carBody = $carBodyObj->create([
                         'title' => $car_body,
-                        'car_model' => $carModel->id,
+                        'car_model_id' => $carModel->id,
                     ]);
 
                     $windowType = \App\WindowType::where('title', (string) $f[2])->first();
@@ -243,12 +241,10 @@ trait Steklocar
             $wp = \App\WindowProducer::where('title', (string) $window['window_producer'])->first();
             if (!$wp) $wp = \App\WindowProducer::create(['title' => (string) $window['window_producer']]);
 
-            $window['window_producer'] = $wp->id;
-            $window['window_type'] = $windowType->id;
-            $window['car_model'] = $carModel->id;
-            $window['car_body'] = $carBody->id;
-
-            var_dump($window);
+            $window['window_producer_id'] = $wp->id;
+            $window['window_type_id'] = $windowType->id;
+            $window['car_model_id'] = $carModel->id;
+            $window['car_body_id'] = $carBody->id;
 
             $window_model = \App\WindowModel::where('title', (string) $window['title'])->where('provider', $window['provider'])->first();
 
@@ -256,6 +252,19 @@ trait Steklocar
 
             $window_model->fill($window);
             $window_model->save();
+
+
+            if (strlen($ercode = substr($window['eurocode'], 0, 4)) == 4) {
+
+                $eurocode = \App\Eurocode::where('title', $ercode)->first();
+                if (!$eurocode) {
+                    $eurocode = \App\Eurocode::create(['title' => $ercode]);
+                }
+
+                if (!$eurocode->carModels()->find($carModel->id)) {
+                    $eurocode->carModels()->attach($carModel->id);
+                }
+            }
         }
     }
 }
