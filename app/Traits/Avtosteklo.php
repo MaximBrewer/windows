@@ -46,7 +46,7 @@ trait Avtosteklo
                         $window['quantity'] = $cell->getvalue();
                     break;
                     case 7:
-                        $window['price'] = $cell->getvalue();
+                        $window['price_opt'] = $cell->getvalue();
                     break;
                     case 8:
                         $window['window_producer'] = $cell->getvalue();

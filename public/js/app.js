@@ -1963,6 +1963,7 @@ __webpack_require__.r(__webpack_exports__);
         }];
         this.car_model_id = 0;
         this.car_body_id = 0;
+        this.isLoading = false;
         return false;
       }
 
@@ -1984,6 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
           title: "Все"
         }];
         this.car_body_id = 0;
+        this.isLoading = false;
         return false;
       }
 
