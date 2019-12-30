@@ -217,6 +217,10 @@
             const data = [];
             const colums = [
                 {
+                    field: 'window_producer_title',
+                    label: 'Производитель',
+                },
+                {
                     field: 'car_producer_title',
                     label: 'Марка',
                 },

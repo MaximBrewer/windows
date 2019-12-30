@@ -2082,6 +2082,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     var data = [];
     var colums = [{
+      field: 'window_producer_title',
+      label: 'Производитель'
+    }, {
       field: 'car_producer_title',
       label: 'Марка'
     }, {
