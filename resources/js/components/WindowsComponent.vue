@@ -117,6 +117,7 @@
                     this.car_models = [{id: 0, title: "Все"}];
                     this.car_model_id = 0;
                     this.car_body_id = 0;
+                    this.isLoading = false
                     return false;
                 }
                 axios.post('/manager/windows/car_models', {car_producer_id: this.car_producer_id}).then(function(response){
@@ -131,6 +132,7 @@
                 if(!this.car_model_id){
                     this.car_bodies = [{id: 0, title: "Все"}];
                     this.car_body_id = 0;
+                    this.isLoading = false
                     return false;
                 }
                 axios.post('/manager/windows/car_bodies', {car_model_id: this.car_model_id}).then(function(response){
