@@ -43,7 +43,7 @@ class UnrecognizedController extends Controller
                 }
             }
         }
-        $unrecognizeds = Unrecognized::all();
+        $unrecognizeds = Unrecognized::where('misstake', "<>", "window");
         return view('unrecognized', ['unrecognizeds' => $unrecognizeds, 'i' => 0]);
     }
 }
