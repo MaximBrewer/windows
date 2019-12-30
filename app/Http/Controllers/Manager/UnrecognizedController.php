@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Manager;
 
 use App\Unrecognized;
 use App\CarProducer;
 use App\CarModel;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UnrecognizedController extends Controller
 {

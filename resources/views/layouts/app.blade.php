@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -67,10 +68,10 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/unrecognized">Не распознанные</a>
+                                <a class="nav-link" href="/manager/unrecognized">Не распознанные модели (Steklocar)</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/windows">Автостекла</a>
+                                <a class="nav-link" href="/manager/windows">Автостекла</a>
                             </li>
                         @endguest
                     </ul>

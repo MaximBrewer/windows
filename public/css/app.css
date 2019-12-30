@@ -11356,3 +11356,13 @@ a.text-dark:focus {
   }
 }
 
+.table-wrapper {
+  overflow-x: scroll;
+}
+
+@media screen and (min-width: 1599px) {
+  .container {
+    max-width: 100% !important;
+  }
+}
+

@@ -243,10 +243,17 @@ trait Steklocar
 
             $window['window_producer_id'] = $wp->id;
             $window['window_type_id'] = $windowType->id;
+            $window['car_producer_id'] = $carProducer->id;
             $window['car_model_id'] = $carModel->id;
             $window['car_body_id'] = $carBody->id;
 
-            $window_model = \App\WindowModel::where('title', (string) $window['title'])->where('provider', $window['provider'])->first();
+            $window_model = \App\WindowModel::
+                where('title', (string) $window['title'])
+                ->where('provider', $window['provider'])
+                ->where('car_producer_id', $carProducer->id)
+                ->where('car_model_id', $carModel->id)
+                ->where('car_body_id', $carBody->id)
+                ->first();
 
             if (!$window_model) $window_model = new \App\WindowModel();
 

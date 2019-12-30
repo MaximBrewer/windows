@@ -6,12 +6,3 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
-.table-wrapper{
-    overflow-x:scroll;
-}
-@media screen and (min-width: 1599px){
-    .container {
-        max-width: 100% !important;
-    }
-}

@@ -7,7 +7,7 @@
             {{ session('status') }}
         </div>
     @endif
-    {{ Form::open(array('url' => '/unrecognized', 'method' => 'post')) }}
+    {{ Form::open(array('url' => '/manager/unrecognized', 'method' => 'post')) }}
     {{ Form::submit('Сохранить') }}
     <br><br>
     <table class="table table-bordered">
