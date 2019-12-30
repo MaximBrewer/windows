@@ -54,9 +54,9 @@ trait Autoparser
                     $carBody = \App\CarBody::find($exist->car_body_id);
 
                     $window_model = \App\WindowModel::
-                        where('title', (string)$window['title'])->
+                        where('title', 'like', $window['title'])->
                         where('window_producer_id', $window['window_producer_id'])->
-                        where('window_type_id', $window['window_type'])->
+                        where('window_type_id', $window['window_type_id'])->
                         where('car_body_id', $carBody->id)->
                         where('provider', $window['provider'])->
                         first();
